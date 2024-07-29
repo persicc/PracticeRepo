@@ -1,3 +1,5 @@
+const db = require("../database/db");
+
 const index = (req, res) => {
   console.log("Success");
 };
@@ -19,6 +21,12 @@ const update = (req, res) => {
 const deleteOne = (req, res) => {
   const { id } = req.params;
   db.query(`delete from users where id = ${id}`);
+};
+
+const login = (req, res) => {
+  console.log("You are logged in");
+
+  fetch("/", { ...req.body });
 };
 
 module.exports = {

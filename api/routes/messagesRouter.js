@@ -4,6 +4,8 @@ const messagesController = require("../controllers/messagesController");
 
 router.get("/", messagesController.index);
 
+router.post("/", messagesController.store);
+
 module.exports = {
   router,
 };
