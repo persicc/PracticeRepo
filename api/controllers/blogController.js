@@ -1,5 +1,6 @@
-const index = (req, res) => {
-  console.log("Success");
+const index = async (req, res) => {
+  const [blogs] = await db.query("select * from blogs");
+  res.json(blogs);
 };
 
 const getOne = (req, res) => {

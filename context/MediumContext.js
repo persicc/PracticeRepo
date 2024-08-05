@@ -1,50 +1,29 @@
-const { createContext, useState, useEffect } = require("react");
+import React, { createContext, useState } from "react";
+const MyContext = createContext();
 
-const MediumContext = createContext();
+const MyContextProvider = ({ children }) => {
+  const [modalOpen, setMoodalOpen] = useState(false);
+  const [userActive, setUserActive] = useState(true);
 
-const MediumProvider = ({ children }) => {
-  const [users, setUsers] = useState([]);
-  const [posts, setPosts] = useState([]);
+  const toggleModal = () => {
+    setMoodalOpen(!modalOpen);
+  };
 
-  useEffect(() => {
-    async function getUsers() {
-      const usersCollection = await getDoc(collection(db, "users"));
-      setUsers(
-        usersCollection.docs.map((doc) => {
-          return {
-            id: doc.id,
-            data: {
-              ...doc.data(),
-            },
-          };
-        })
-      );
-    }
-    getUsers();
-  }, [users]);
-
-  useEffect(() => {
-    async function getPosts() {
-      const postsCollection = await getDoc(collection(db, "posts"));
-      setPosts(
-        postsCollection.docs.map((doc) => {
-          return {
-            id: doc.id,
-            data: {
-              ...doc.data(),
-            },
-          };
-        })
-      );
-    }
-    getPosts();
-  }, [posts]);
+  const toggleUserActive = () => {
+    setUserActive(!userActive);
+  };
 
   return (
-    <MediumContext.Provider value={{ users, posts }}>
+    <MyContext.Provider
+      value={{
+        modalOpen,
+        toggleModal,
+        userActive,
+        toggleUserActive,
+      }}
+    >
       {children}
-    </MediumContext.Provider>
+    </MyContext.Provider>
   );
 };
-
-export { MediumContext, MediumProvider };
+export { MyContext, MyContextProvider };
